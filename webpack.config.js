@@ -2,17 +2,18 @@ const path = require("path");
 
 module.exports = {
   entry: "./src/index.js",
-  mode:"development",
+  mode: "development",
   output: {
     filename: "main.js",
     path: path.resolve(__dirname, "dist"),
   },
-  module:{
+  devtool: "inline-source-map",
+  module: {
     rules: [
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
-      }
-    ]
-  }
+        use: ["style-loader", "css-loader"],
+      },
+    ],
+  },
 };
