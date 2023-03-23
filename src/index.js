@@ -8,6 +8,42 @@ async function getCurrentWeatherData(city='london'){
   return respJson;
 }
 
+async function getForecast(city='london'){
+  const resp = await fetch(
+    `http://api.weatherapi.com/v1/forecast.json?key=b00ef59dc62e4d45bcf61559232003&q=${city}&days=8&aqi=no&alerts=no`
+  );
+  const respJson = await resp.json();
+  return respJson;
+}
+
+async function foreCastTrimPerDay(respDay){
+  const resp = await respDay;
+  const date = resp.date;
+  const day = resp.day;
+
+  const averageTempInC = day.avgtemp_c;
+  const averageTempInF = day.avgtemp_f;
+  const maxWindMph = day.maxwind_mph;
+  const maxWindKph = day.maxwind_kph;
+  const avgHumidity = day.avghumidity;
+  const condition = day.condition.text;
+
+  console.log(date);
+  console.log(day);
+  console.log(averageTempInC);
+  console.log(averageTempInF);
+  console.log(maxWindMph);
+  console.log(maxWindKph);
+  console.log(avgHumidity);
+  console.log(condition);
+}
+
+async function trimForecastData(respJson){
+  const resp = await respJson;
+  const sevenDays = resp.forecast.forecastday;
+  sevenDays.forEach(foreCastTrimPerDay);
+}
+
 async function trimCurrentData(respJson){
 
   const resp = await respJson;
@@ -27,6 +63,7 @@ async function trimCurrentData(respJson){
   const windMph = resp.current.wind_mph;
 
   const cloud = resp.current.cloud;
+  const humidity = resp.current.humidity;
 
   console.log(resp);
   console.log(tempInC);
@@ -38,14 +75,16 @@ async function trimCurrentData(respJson){
   console.log(condition);
   console.log(windDir, windKph, windMph)
   console.log(cloud);
-
+  console.log('humidity: ', humidity);
 }
 
 function getCityName(event){
   event.preventDefault();
   const city = document.getElementById('cityName');
-  const currentData = getCurrentWeatherData(city.value);
-  trimCurrentData(currentData);
+  // const currentData = getCurrentWeatherData(city.value);
+  const foreCastData = getForecast(city.value);
+  // trimCurrentData(currentData);
+  trimForecastData (foreCastData);
   city.value = '';
 }
 
