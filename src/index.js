@@ -8,6 +8,17 @@ async function getCurrentWeatherData(city='london'){
   return respJson;
 }
 
+async function showCurrentWeatherData(cityName){
+  const content = document.getElementById('content');
+  const currentData = await getCurrentWeatherData(cityName);
+  const trimmedData = await trimCurrentData(currentData);
+  trimmedData.forEach((data) => {
+    const div = document.createElement('div');
+    div.innerHTML = data;
+    content.append(div);
+  });
+}
+
 async function getForecast(city='london'){
   const resp = await fetch(
     `http://api.weatherapi.com/v1/forecast.json?key=b00ef59dc62e4d45bcf61559232003&q=${city}&days=8&aqi=no&alerts=no`
@@ -76,15 +87,30 @@ async function trimCurrentData(respJson){
   console.log(windDir, windKph, windMph)
   console.log(cloud);
   console.log('humidity: ', humidity);
+  return [
+    country,
+    city,
+    condition, 
+    lastUpdated,
+    tempInC,
+    tempInF,
+    feelsLikeC,
+    feelsLikeF,
+    humidity,
+    cloud,
+    windDir,
+    windKph,
+    windMph,
+  ]
+  
 }
 
 function getCityName(event){
   event.preventDefault();
   const city = document.getElementById('cityName');
-  // const currentData = getCurrentWeatherData(city.value);
-  const foreCastData = getForecast(city.value);
-  // trimCurrentData(currentData);
-  trimForecastData (foreCastData);
+  showCurrentWeatherData(city.value);
+  // const foreCastData = getForecast(city.value);
+  // trimForecastData (foreCastData);
   city.value = '';
 }
 
