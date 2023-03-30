@@ -2,7 +2,7 @@ import './style.css'
 
 async function getCurrentWeatherData(city='london'){
   const resp = await fetch(
-    `http://api.weatherapi.com/v1/current.json?key=b00ef59dc62e4d45bcf61559232003&q=${city}&aqi=yes`
+    `https://api.weatherapi.com/v1/current.json?key=b00ef59dc62e4d45bcf61559232003&q=${city}&aqi=yes`
   );
   const respJson = await resp.json();
   return respJson;
@@ -80,7 +80,7 @@ async function showCurrentWeatherData(cityName){
 
 async function getForecast(city = "london") {
   const resp = await fetch(
-    `http://api.weatherapi.com/v1/forecast.json?key=b00ef59dc62e4d45bcf61559232003&q=${city}&days=8&aqi=yes&alerts=no`
+    `https://api.weatherapi.com/v1/forecast.json?key=b00ef59dc62e4d45bcf61559232003&q=${city}&days=8&aqi=yes&alerts=no`
   );
   const respJson = await resp.json();
   return respJson;
