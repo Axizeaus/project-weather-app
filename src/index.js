@@ -51,6 +51,7 @@ async function showCurrentWeatherData(cityName){
   const trimmedData = await trimCurrentData(currentData);
   trimmedData.forEach((data) => {
     const div = document.createElement('div');
+    div.classList.add('card');
     div.innerHTML = data;
     content.append(div);
   });
@@ -101,9 +102,10 @@ async function showForeCastWeatherData(cityName){
   const forecastData = await getForecast(cityName);
   const trimmedData = await trimForecastData(forecastData);
   trimmedData.forEach((data) => {
-    const li = document.createElement('li');
-    li.innerHTML = data;
-    forecast.append(li);
+    const div = document.createElement('div');
+    div.innerHTML = data;
+    div.classList.add('card');
+    forecast.append(div);
   })
 }
 
