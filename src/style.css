@@ -4,9 +4,10 @@ body{
 }
 
 .card {
-  width: max-content;
+  width: 60%;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
+  margin: 10px;
 }
 
 .card:hover{
@@ -39,6 +40,7 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    font-size: 1.5rem;
 }
 
 #forecast{
@@ -47,9 +49,14 @@ body{
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+  font-size: 1rem;
 }
 
 
 .container footer {
   background: rgb(111, 111, 206);
+}
+
+body{
+  font-family: roboto;
 }

@@ -8,6 +8,9 @@ async function getCurrentWeatherData(city='london'){
   return respJson;
 }
 
+// helper function to get var name as string
+const varToString = varObj => Object.keys(varObj)[0]
+
 async function trimCurrentData(respJson) {
   const resp = await respJson;
   const tempInC = resp.current.temp_c;
@@ -49,12 +52,30 @@ async function showCurrentWeatherData(cityName){
   const content = document.getElementById('content');
   const currentData = await getCurrentWeatherData(cityName);
   const trimmedData = await trimCurrentData(currentData);
-  trimmedData.forEach((data) => {
+  const h1 = document.createElement('h1');
+  h1.innerHTML = 'Current Weather Data';
+  content.append(h1);
+  const dataNames = [
+    'country',
+    'city',
+    'condition',
+    'lastUpdated',
+    'tempInC',
+    'tempInF',
+    'feelsLikeC',
+    'feelsLikeF',
+    'humidity',
+    'cloud',
+    'windDir',
+    'windKph',
+    'windMph',
+  ];
+  for (let i = 0; i < dataNames.length; i++){
     const div = document.createElement('div');
     div.classList.add('card');
-    div.innerHTML = data;
+    div.innerHTML = dataNames[i] + " : " + trimmedData[i];
     content.append(div);
-  });
+  }
 }
 
 async function getForecast(city = "london") {
@@ -101,12 +122,29 @@ async function showForeCastWeatherData(cityName){
   const forecast = document.getElementById('forecast');
   const forecastData = await getForecast(cityName);
   const trimmedData = await trimForecastData(forecastData);
-  trimmedData.forEach((data) => {
-    const div = document.createElement('div');
-    div.innerHTML = data;
-    div.classList.add('card');
-    forecast.append(div);
-  })
+  const h2 = document.createElement('h2');
+  h2.innerHTML = 'Forecast Data';
+  forecast.append(h2);
+  const dataNames = [
+    'date',
+    'averageTempInC',
+    'averageTempInF',
+    'maxWindKph',
+    'maxWindMph',
+    'avgHumidity',
+    'condition',
+  ];
+  for (let i = 0; i < trimmedData.length; i++){
+    const data = trimmedData[i]
+    const card = document.createElement('div');
+    card.classList.add('card');
+    for (let i = 0; i < dataNames.length; i++){
+      const div = document.createElement('div');
+      div.innerHTML = dataNames[i] + ' : '+ data[i];
+      card.append(div);
+    }
+    forecast.append(card);
+  }
 }
 
 function getCityName(event){
@@ -117,12 +155,18 @@ function getCityName(event){
   city.value = '';
 }
 
+function clearScreen(){
+  document.getElementById('content').innerHTML = '';
+  document.getElementById('forecast').innerHTML = '';
+}
+
 const form = document.getElementById('form');
 form.addEventListener('submit', function(e){
   getCityName(e);
+  clearScreen();
 })
 
 window.onload = () =>{
-  showCurrentWeatherData('lashio');
-  showForeCastWeatherData('lashio');
+  showCurrentWeatherData('london');
+  showForeCastWeatherData('london');
 }
