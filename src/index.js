@@ -8,9 +8,6 @@ async function getCurrentWeatherData(city='london'){
   return respJson;
 }
 
-// helper function to get var name as string
-const varToString = varObj => Object.keys(varObj)[0]
-
 async function trimCurrentData(respJson) {
   const resp = await respJson;
   const tempInC = resp.current.temp_c;
